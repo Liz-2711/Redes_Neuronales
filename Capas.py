@@ -1,6 +1,6 @@
 import json 
 import numpy as np 
-
+import matplotlib.pyplot as plt
 
 
 
@@ -52,3 +52,17 @@ def softmax(z):
     exps = np.exp(z_stable)
     return exps / np.sum(exps, axis=1, keepdims=True)
 
+class DenseLayer:
+    def __init__(self, W, b, activation):
+        self.W = W
+        self.b = b
+        self.activation = activation
+    
+    def forward(self, x):
+        output = np.dot(x, self.W) + self.b
+        if self.activation == 'relu':
+            return relu(output)
+        elif self.activation == 'softmax':
+            return softmax(output)
+        else:
+            raise ValueError(f"Activación no soportada: {self.activation}")
